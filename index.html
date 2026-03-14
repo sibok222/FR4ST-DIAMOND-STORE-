@@ -9,166 +9,149 @@
     <style>
         :root {
             --neon: #00d4ff;
-            --purple: #8a2be2;
-            --bg: #050510;
+            --pro-color: #ffcc00;
         }
-        
-        body {
-            background: linear-gradient(-45deg, #050510, #1a1a2e, #0f0f1a, #000000);
-            background-size: 400% 400%;
-            animation: gradientBG 15s ease infinite;
-            color: white;
-            font-family: 'Poppins', sans-serif;
+
+        body, html {
             margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow: hidden;
             display: flex;
-            flex-direction: column;
             align-items: center;
             justify-content: center;
-            min-height: 100vh;
-            overflow-x: hidden;
         }
 
-        @keyframes gradientBG {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
+        /* 3D Video Background */
+        #bg-video {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+            filter: brightness(40%);
         }
 
+        /* Glassmorphism 3D Box */
         .box {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(15px);
+            background: rgba(255, 255, 255, 0.07);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             border: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 30px;
-            border-radius: 25px;
-            width: 90%;
-            max-width: 400px;
+            border-radius: 30px;
+            padding: 35px;
+            width: 85%;
+            max-width: 380px;
             text-align: center;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
-            animation: float 4s ease-in-out infinite;
-            border-top: 2px solid var(--neon);
+            box-shadow: 0 25px 45px rgba(0, 0, 0, 0.5);
+            transform: perspective(1000px) rotateX(5deg);
+            animation: float 5s ease-in-out infinite;
         }
 
         @keyframes float {
-            0%, 100% { transform: translateY(0px) rotateX(0deg); }
-            50% { transform: translateY(-15px) rotateX(5deg); }
+            0%, 100% { transform: perspective(1000px) translateY(0px) rotateX(5deg); }
+            50% { transform: perspective(1000px) translateY(-15px) rotateX(2deg); }
         }
 
         h1 {
-            font-size: 2.5rem;
-            text-transform: uppercase;
-            letter-spacing: 5px;
-            background: linear-gradient(to right, #00d4ff, #8a2be2);
+            font-size: 2.8rem;
+            margin: 0 0 20px 0;
+            background: linear-gradient(to bottom, #fff, var(--neon));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            filter: drop-shadow(0 0 10px rgba(0, 212, 255, 0.5));
-            margin-bottom: 20px;
-        }
-
-        .points-box {
-            background: rgba(0, 212, 255, 0.1);
-            border-radius: 15px;
-            padding: 15px;
-            margin: 15px 0;
-            border: 1px dashed var(--neon);
-        }
-
-        .points {
-            font-size: 45px;
-            color: #00ff88;
+            letter-spacing: 3px;
             font-weight: 900;
-            text-shadow: 0 0 20px rgba(0, 255, 136, 0.6);
         }
 
         input {
             width: 85%;
             padding: 15px;
-            background: rgba(0, 0, 0, 0.5);
+            margin-bottom: 20px;
+            background: rgba(0, 0, 0, 0.4);
             border: 1px solid var(--neon);
-            border-radius: 10px;
-            color: white;
-            margin-bottom: 15px;
+            border-radius: 12px;
+            color: #fff;
+            font-size: 16px;
             outline: none;
-            transition: 0.3s;
+            box-shadow: inset 0 0 10px rgba(0, 212, 255, 0.2);
         }
-
-        input:focus { box-shadow: 0 0 15px var(--neon); }
 
         .btn {
             width: 100%;
-            padding: 15px;
-            margin: 10px 0;
-            border-radius: 12px;
+            padding: 16px;
             border: none;
+            border-radius: 12px;
             font-weight: bold;
-            text-transform: uppercase;
+            font-size: 15px;
             cursor: pointer;
             transition: 0.3s;
-            position: relative;
-            overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            text-transform: uppercase;
+            margin-bottom: 10px;
         }
 
         .btn-blue {
-            background: linear-gradient(45deg, #00d4ff, #0055ff);
-            color: white;
+            background: var(--neon);
+            color: #000;
+            box-shadow: 0 0 15px rgba(0, 212, 255, 0.4);
         }
 
         .btn-pro {
             background: linear-gradient(45deg, #ffcc00, #ff6600);
-            color: black;
-            box-shadow: 0 0 20px rgba(255, 153, 0, 0.4);
+            color: #000;
+            box-shadow: 0 0 20px rgba(255, 204, 0, 0.4);
         }
 
-        .btn:active { transform: scale(0.95); }
-
-        .pro-locked {
-            background: #333 !important;
-            color: #888 !important;
-            cursor: not-allowed !important;
-            opacity: 0.6;
+        .points-display {
+            background: rgba(0, 212, 255, 0.1);
+            padding: 15px;
+            border-radius: 15px;
+            margin: 15px 0;
+            border-left: 4px solid var(--neon);
         }
 
-        /* 3D look for status badge */
-        .status-badge {
-            display: inline-block;
-            padding: 5px 15px;
-            border-radius: 20px;
-            font-size: 12px;
+        .points-val {
+            font-size: 40px;
+            color: #00ff88;
             font-weight: bold;
-            margin-bottom: 10px;
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255,255,255,0.2);
         }
 
+        #status-msg { font-size: 12px; color: #aaa; margin-top: 10px; }
     </style>
 </head>
 <body>
 
-    <h1>FR4ST</h1>
+    <video autoplay loop muted playsinline id="bg-video">
+        <source src="https://assets.mixkit.co/videos/preview/mixkit-abstract-technology-vj-loop-background-40018-large.mp4" type="video/mp4">
+    </video>
 
     <div id="auth-section" class="box">
-        <div class="status-badge">SECURE SERVER v3.0</div>
-        <h3>SYSTEM INITIALIZING...</h3>
-        <p>Enter Player ID to Access Database</p>
-        <input type="text" id="user-id" placeholder="ID: 882736452">
-        <button class="btn btn-blue" onclick="login()">ENTER SYSTEM</button>
+        <h1>FR4ST</h1>
+        <p style="color: var(--neon); font-size: 12px; letter-spacing: 2px;">SECURE ACCESS PANEL</p>
+        <input type="text" id="user-id" placeholder="Enter Player ID">
+        <button class="btn btn-blue" onclick="login()">Enter Database</button>
+        <p id="status-msg">v4.0 Technology System</p>
     </div>
 
     <div id="dashboard" class="box" style="display:none;">
-        <div class="status-badge" id="pro-tag">BASIC USER</div>
-        <p style="font-size: 14px; opacity: 0.7;">CONNECTED: <span id="display-id">---</span></p>
+        <h2 id="pro-tag" style="font-size: 14px; color: #aaa;">BASIC MEMBER</h2>
+        <p style="font-size: 13px; opacity: 0.6;">SESSION ID: <span id="display-id"></span></p>
         
-        <div class="points-box">
-            <div style="font-size: 12px; color: var(--neon);">WALLET BALANCE</div>
-            <div class="points"><span id="user-points">0</span> <span style="font-size: 15px;">PTS</span></div>
+        <div class="points-display">
+            <div style="font-size: 11px; color: var(--neon);">CURRENT POINTS</div>
+            <div class="points-val"><span id="user-points">0</span></div>
         </div>
         
-        <button class="btn btn-pro" onclick="upgradeToPro()" id="upgrade-btn">🚀 ACTIVATE PRO MODE</button>
-        <button class="btn btn-blue" onclick="watchAd(1)">VIEW EASY TASK (Rs. 1)</button>
-        <button class="btn pro-locked" id="pro-ad-btn" disabled onclick="watchAd(20)">PRO TASK (LOCKED 🔒)</button>
+        <button class="btn btn-pro" onclick="upgradeToPro()" id="upgrade-btn">🚀 UNLOCK PRO MODE</button>
+        <button class="btn btn-blue" onclick="watchAd(1)">Easy Task (Rs. 1)</button>
+        <button class="btn" id="pro-ad-btn" style="background:#444; color:#888; cursor:not-allowed;" disabled onclick="watchAd(20)">Pro Task (Locked)</button>
     </div>
 
     <script>
+        // Firebase Configuration
         const firebaseConfig = {
             apiKey: "AIzaSyDj-Q98LskW2kqpAkx66EP-TeYvC7_8U4",
             authDomain: "fr4st-ff-store.firebaseapp.com",
@@ -184,18 +167,24 @@
         const db = firebase.database();
         let currentUserID = "";
 
+        // Login Logic
         function login() {
             const id = document.getElementById('user-id').value.trim();
-            if(!id) return alert("Enter Player ID!");
+            if(!id) return alert("Player ID එක ගහපන්!");
             currentUserID = id;
             
+            document.getElementById('status-msg').innerText = "CONNECTING TO DATABASE...";
+
             db.ref('users/' + id).once('value', (snapshot) => {
                 if(!snapshot.exists()) {
-                    db.ref('users/' + id).set({ points: 0, isPro: false });
-                    loadDashboard({ points: 0, isPro: false });
+                    db.ref('users/' + id).set({ points: 0, isPro: false })
+                    .then(() => loadDashboard({ points: 0, isPro: false }))
+                    .catch(e => alert("Error: " + e.message));
                 } else {
                     loadDashboard(snapshot.val());
                 }
+            }, (error) => {
+                alert("Firebase Rules Error: " + error.message);
             });
         }
 
@@ -208,28 +197,30 @@
         }
 
         function setProUI() {
-            document.getElementById('pro-tag').innerText = "PRO ACCOUNT ACTIVE 🔥";
+            document.getElementById('pro-tag').innerText = "PRO MEMBER ACTIVE 🔥";
             document.getElementById('pro-tag').style.color = "#ffcc00";
             document.getElementById('pro-ad-btn').disabled = false;
-            document.getElementById('pro-ad-btn').className = "btn btn-pro";
-            document.getElementById('pro-ad-btn').innerText = "VIEW PRO TASK (Rs. 20)";
+            document.getElementById('pro-ad-btn').style.background = "var(--neon)";
+            document.getElementById('pro-ad-btn').style.color = "#000";
+            document.getElementById('pro-ad-btn').style.cursor = "pointer";
+            document.getElementById('pro-ad-btn').innerText = "Pro Task (Rs. 20)";
             document.getElementById('upgrade-btn').style.display = "none";
         }
 
         function watchAd(amount) {
-            alert("Redirecting to task...");
-            window.open('https://www.google.com', '_blank'); 
-            db.ref('users/' + currentUserID + '/points').transaction(cp => (cp || 0) + amount);
+            alert("Loading Ad Task...");
+            window.open('https://www.google.com', '_blank'); // මෙතනට ඔයාගේ ලින්ක් එක දාන්න
+            
+            db.ref('users/' + currentUserID + '/points').transaction(p => (p || 0) + amount);
             let p = parseInt(document.getElementById('user-points').innerText);
             document.getElementById('user-points').innerText = p + amount;
         }
 
         function upgradeToPro() {
-            let num = prompt("Enter Number for Activation (Rs. 5 Daily Tax):");
-            if(num && num.length >= 10) {
+            let n = prompt("Activation Number එක ගහන්න:");
+            if(n) {
                 db.ref('users/' + currentUserID).update({ isPro: true });
                 setProUI();
-                alert("PRO MODE ACTIVATED SUCCESSFULLY!");
             }
         }
     </script>
