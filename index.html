@@ -1,57 +1,115 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FR4ST FREE DIAMOND</title>
+    <script src="https://www.gstatic.com/firebasejs/9.1.3/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.1.3/firebase-database-compat.js"></script>
     <style>
-        :root { --neon-blue: #00d4ff; --dark-bg: #0b0b1a; }
-        body { background: var(--dark-bg); color: white; font-family: sans-serif; text-align: center; }
-        .box { border: 2px solid var(--neon-blue); padding: 20px; border-radius: 15px; margin: 20px auto; width: 80%; max-width: 400px; }
-        .btn { background: var(--neon-blue); color: black; padding: 12px; width: 100%; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; margin-top: 10px; }
-        .pro-card { background: linear-gradient(135deg, #ffcc00, #ff6600); color: black; padding: 15px; border-radius: 10px; margin-top: 15px; }
-        .points-display { font-size: 24px; color: #00ff88; margin: 10px 0; }
+        :root { --neon: #00d4ff; --bg: #0b0b1a; }
+        body { background: var(--bg); color: white; font-family: sans-serif; text-align: center; }
+        .box { border: 2px solid var(--neon); padding: 20px; border-radius: 15px; margin: 20px auto; width: 85%; max-width: 400px; background: #15152a; }
+        .btn { background: var(--neon); color: black; padding: 12px; width: 100%; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; margin-top: 10px; }
+        .points { font-size: 30px; color: #00ff88; font-weight: bold; margin: 10px 0; }
+        input { width: 90%; padding: 10px; margin: 5px 0; border-radius: 5px; border: none; }
+        .pro-badge { background: linear-gradient(45deg, #ffcc00, #ff6600); color: black; padding: 10px; border-radius: 8px; margin-bottom: 15px; font-weight: bold; }
     </style>
 </head>
 <body>
 
-    <h1>FR4ST FREE DIAMOND</h1>
+    <h1>FR4ST DIAMOND</h1>
 
     <div id="auth-section" class="box">
-        <h3>Create Account</h3>
-        <input type="text" id="username" placeholder="Name" style="width:90%; padding:10px; margin:5px;">
-        <input type="email" id="email" placeholder="Email" style="width:90%; padding:10px; margin:5px;">
-        <input type="password" id="pass" placeholder="Password" style="width:90%; padding:10px; margin:5px;">
-        <button class="btn" onclick="registerUser()">Start Earning</button>
+        <h3>Account Login</h3>
+        <input type="text" id="user-id" placeholder="Enter Your Player ID">
+        <button class="btn" onclick="login()">Login / Join</button>
     </div>
 
     <div id="dashboard" class="box" style="display:none;">
-        <h3>Welcome, <span id="display-name">User</span>!</h3>
-        <div class="points-display">Points: <span id="user-points">0</span></div>
+        <div class="pro-badge" id="pro-tag">BASIC MEMBER</div>
+        <h3>ID: <span id="display-id">---</span></h3>
+        <div class="points">Points: <span id="user-points">0</span></div>
         
-        <div class="pro-card">
-            <strong>PRO MODE 🔥</strong>
-            <p>Earn Rs. 20 per Ad</p>
-            <button onclick="upgradeToPro()" style="background:black; color:white; border:none; padding:5px 10px; border-radius:5px;">Activate with Number</button>
-        </div>
-
-        <button class="btn" onclick="watchEasyAd()">Watch Easy Ad (Rs. 1)</button>
-        <button id="pro-ad-btn" class="btn" style="background:#444; cursor:not-allowed;" disabled onclick="watchProAd()">Watch Pro Ad (Rs. 20)</button>
+        <button class="btn" onclick="upgradeToPro()" id="upgrade-btn">Upgrade to PRO (Unlock Rs. 20 Ads)</button>
+        <button class="btn" onclick="watchAd(1)">Watch Easy Ad (Rs. 1)</button>
+        <button class="btn" id="pro-ad-btn" style="background:#444; cursor:not-allowed;" disabled onclick="watchAd(20)">Watch Pro Ad (Locked)</button>
     </div>
 
     <script>
-        // මෙතනට පස්සේ අපි Firebase Logic ටික ඇතුළත් කරනවා
-        function registerUser() {
+        // Firebase Config (ඔයාගේ Screenshot එකෙන් ගත්තේ)
+        const firebaseConfig = {
+            apiKey: "AIzaSyDj-Q98LskW2kqpAkx66EP-T...", // මෙතන ඔයාගේ සම්පූර්ණ API Key එක දාන්න
+            authDomain: "fr4st-ff-store.firebaseapp.com",
+            databaseURL: "https://fr4st-ff-store-default-rtdb.firebaseio.com",
+            projectId: "fr4st-ff-store",
+            storageBucket: "fr4st-ff-store.appspot.com",
+            messagingSenderId: "924493805308",
+            appId: "1:924493805308:web:e98dd883ce97b0deb0c979",
+            measurementId: "G-165DE67X3"
+        };
+
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.database();
+        let currentUserID = "";
+
+        function login() {
+            const id = document.getElementById('user-id').value;
+            if(!id) return alert("ID එක ගහපන් බං!");
+            currentUserID = id;
+            
+            // Database එකෙන් User ව හොයනවා
+            db.ref('users/' + id).once('value', (snapshot) => {
+                if(!snapshot.exists()) {
+                    // අලුත් User කෙනෙක් නම්
+                    db.ref('users/' + id).set({ points: 0, isPro: false });
+                }
+                loadDashboard(snapshot.val() || { points: 0, isPro: false });
+            });
+        }
+
+        function loadDashboard(data) {
             document.getElementById('auth-section').style.display = 'none';
             document.getElementById('dashboard').style.display = 'block';
-            document.getElementById('display-name').innerText = document.getElementById('username').value;
+            document.getElementById('display-id').innerText = currentUserID;
+            document.getElementById('user-points').innerText = data.points;
+            
+            if(data.isPro) {
+                setProUI();
+            }
+        }
+
+        function setProUI() {
+            document.getElementById('pro-tag').innerText = "PRO MEMBER 🔥";
+            document.getElementById('pro-tag').style.background = "linear-gradient(45deg, #00d4ff, #0055ff)";
+            document.getElementById('pro-ad-btn').disabled = false;
+            document.getElementById('pro-ad-btn').style.background = "#00d4ff";
+            document.getElementById('pro-ad-btn').style.cursor = "pointer";
+            document.getElementById('pro-ad-btn').innerText = "Watch Pro Ad (Rs. 20)";
+            document.getElementById('upgrade-btn').style.display = "none";
+        }
+
+        function watchAd(amount) {
+            alert("Loading Ad...");
+            // මෙතනට ඔයාගේ Adsterra Link එක දාන්න
+            window.open('https://www.google.com', '_blank'); 
+
+            // Points Update කිරීම
+            db.ref('users/' + currentUserID + '/points').transaction((currentPoints) => {
+                return (currentPoints || 0) + amount;
+            });
+            
+            // UI එක Update කිරීම
+            let p = parseInt(document.getElementById('user-points').innerText);
+            document.getElementById('user-points').innerText = p + amount;
         }
 
         function upgradeToPro() {
-            let num = prompt("Enter your Dialog/Hutch Number for Daily Tax (Rs. 5/day):");
+            let num = prompt("Enter Number for Daily Tax (Rs. 5/day):");
             if(num) {
-                alert("Subscription Successful! Pro Ads Unlocked.");
-                document.getElementById('pro-ad-btn').style.background = '#00d4ff';
-                document.getElementById('pro-ad-btn').disabled = false;
-                document.getElementById('pro-ad-btn').style.cursor = 'pointer';
+                db.ref('users/' + currentUserID).update({ isPro: true });
+                setProUI();
+                alert("Pro Unlocked!");
             }
         }
     </script>
