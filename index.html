@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>FR4ST FREE DIAMOND</title>
+    <style>
+        :root { --neon-blue: #00d4ff; --dark-bg: #0b0b1a; }
+        body { background: var(--dark-bg); color: white; font-family: sans-serif; text-align: center; }
+        .box { border: 2px solid var(--neon-blue); padding: 20px; border-radius: 15px; margin: 20px auto; width: 80%; max-width: 400px; }
+        .btn { background: var(--neon-blue); color: black; padding: 12px; width: 100%; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; margin-top: 10px; }
+        .pro-card { background: linear-gradient(135deg, #ffcc00, #ff6600); color: black; padding: 15px; border-radius: 10px; margin-top: 15px; }
+        .points-display { font-size: 24px; color: #00ff88; margin: 10px 0; }
+    </style>
+</head>
+<body>
+
+    <h1>FR4ST FREE DIAMOND</h1>
+
+    <div id="auth-section" class="box">
+        <h3>Create Account</h3>
+        <input type="text" id="username" placeholder="Name" style="width:90%; padding:10px; margin:5px;">
+        <input type="email" id="email" placeholder="Email" style="width:90%; padding:10px; margin:5px;">
+        <input type="password" id="pass" placeholder="Password" style="width:90%; padding:10px; margin:5px;">
+        <button class="btn" onclick="registerUser()">Start Earning</button>
+    </div>
+
+    <div id="dashboard" class="box" style="display:none;">
+        <h3>Welcome, <span id="display-name">User</span>!</h3>
+        <div class="points-display">Points: <span id="user-points">0</span></div>
+        
+        <div class="pro-card">
+            <strong>PRO MODE 🔥</strong>
+            <p>Earn Rs. 20 per Ad</p>
+            <button onclick="upgradeToPro()" style="background:black; color:white; border:none; padding:5px 10px; border-radius:5px;">Activate with Number</button>
+        </div>
+
+        <button class="btn" onclick="watchEasyAd()">Watch Easy Ad (Rs. 1)</button>
+        <button id="pro-ad-btn" class="btn" style="background:#444; cursor:not-allowed;" disabled onclick="watchProAd()">Watch Pro Ad (Rs. 20)</button>
+    </div>
+
+    <script>
+        // මෙතනට පස්සේ අපි Firebase Logic ටික ඇතුළත් කරනවා
+        function registerUser() {
+            document.getElementById('auth-section').style.display = 'none';
+            document.getElementById('dashboard').style.display = 'block';
+            document.getElementById('display-name').innerText = document.getElementById('username').value;
+        }
+
+        function upgradeToPro() {
+            let num = prompt("Enter your Dialog/Hutch Number for Daily Tax (Rs. 5/day):");
+            if(num) {
+                alert("Subscription Successful! Pro Ads Unlocked.");
+                document.getElementById('pro-ad-btn').style.background = '#00d4ff';
+                document.getElementById('pro-ad-btn').disabled = false;
+                document.getElementById('pro-ad-btn').style.cursor = 'pointer';
+            }
+        }
+    </script>
+</body>
+</html>
