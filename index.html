@@ -3,193 +3,178 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FR4ST FREE DIAMOND | 3D DARK PRO</title>
+    <title>SIBOK STORE | RED MATRIX PRO</title>
     <script src="https://www.gstatic.com/firebasejs/9.1.3/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.1.3/firebase-database-compat.js"></script>
     <style>
         :root {
-            --neon: #00d4ff; /* Neon Blue */
-            --neon-glowing: #00ff88; /* Neon Green for points */
-            --pro-color: #ffcc00; /* Gold for PRO */
-            --dark-bg: #050510;
+            --neon-red: #ff0000;
+            --dark-red: #330000;
+            --bg-black: #000000;
         }
 
         body, html {
-            margin: 0;
-            padding: 0;
-            width: 100%;
-            height: 100%;
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            overflow: hidden; /* Prevent scrolling for video bg */
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background-color: var(--dark-bg);
+            margin: 0; padding: 0; width: 100%; height: 100%;
+            background-color: var(--bg-black);
+            font-family: 'Courier New', Courier, monospace;
+            overflow: hidden;
+            display: flex; align-items: center; justify-content: center;
         }
 
-        /* Animated Video Background - 3D Tech Abstract Loop */
-        #bg-video {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            z-index: -1;
-            filter: brightness(30%); /* Darken video for text contrast */
+        /* Matrix Canvas Background */
+        canvas {
+            position: fixed; top: 0; left: 0; z-index: -1;
         }
 
-        /* Ultra Dark Glassmorphism 3D Box */
         .box {
-            background: rgba(0, 0, 0, 0.6); /* Super Dark Background */
-            backdrop-filter: blur(25px); /* Stronger Blur */
-            -webkit-backdrop-filter: blur(25px);
-            border: 1px solid rgba(255, 255, 255, 0.05); /* Very Subtle Border */
-            border-radius: 35px;
-            padding: 40px;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--neon-red);
+            border-radius: 10px;
+            padding: 30px;
             width: 85%;
             max-width: 400px;
             text-align: center;
-            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8);
-            transform: perspective(1000px) rotateX(3deg);
-            animation: float 6s ease-in-out infinite;
-            border-top: 2px solid var(--neon); /* Neon Accent Top */
+            box-shadow: 0 0 20px var(--dark-red);
+            animation: glitch 5s infinite;
         }
 
-        @keyframes float {
-            0%, 100% { transform: perspective(1000px) translateY(0px) rotateX(3deg); }
-            50% { transform: perspective(1000px) translateY(-20px) rotateX(1deg); }
+        @keyframes glitch {
+            0% { box-shadow: 0 0 10px var(--dark-red); }
+            50% { box-shadow: 0 0 25px var(--neon-red); }
+            100% { box-shadow: 0 0 10px var(--dark-red); }
         }
 
         h1 {
-            font-size: 3.2rem;
-            margin: 0 0 10px 0;
-            background: linear-gradient(to bottom, #fff 40%, var(--neon));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            letter-spacing: 4px;
-            font-weight: 900;
-            filter: drop-shadow(0 0 15px rgba(0, 212, 255, 0.6));
+            color: var(--neon-red);
+            font-size: 2.5rem;
+            margin: 0;
+            text-transform: uppercase;
+            letter-spacing: 5px;
+            text-shadow: 2px 2px 10px var(--neon-red);
         }
 
-        /* Dark & Glowing Input Boxes */
-        input {
-            width: 90%;
-            padding: 18px;
-            margin-bottom: 25px;
-            background: rgba(0, 0, 0, 0.8); /* Pure Dark Input */
-            border: 1px solid rgba(0, 212, 255, 0.3); /* Subtle Neon Border */
-            border-radius: 15px;
+        p.sub-title {
             color: #fff;
-            font-size: 17px;
-            outline: none;
-            transition: 0.3s ease;
-            box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.5);
+            font-size: 10px;
+            letter-spacing: 2px;
+            margin-bottom: 25px;
+            opacity: 0.8;
         }
 
-        input:focus {
-            border-color: var(--neon);
-            box-shadow: 0 0 20px rgba(0, 212, 255, 0.5), inset 0 0 10px rgba(0, 0, 0, 0.5);
+        /* Dark & Red Input */
+        input {
+            width: 85%;
+            padding: 15px;
+            margin-bottom: 20px;
+            background: rgba(20, 0, 0, 0.9);
+            border: 1px solid var(--neon-red);
+            border-radius: 5px;
+            color: var(--neon-red);
+            font-size: 16px;
+            outline: none;
+            text-align: center;
+            font-weight: bold;
         }
+
+        input::placeholder { color: var(--dark-red); }
 
         .btn {
             width: 100%;
-            padding: 18px;
+            padding: 15px;
             border: none;
-            border-radius: 15px;
+            border-radius: 5px;
             font-weight: bold;
-            font-size: 16px;
             cursor: pointer;
-            transition: 0.3s ease;
             text-transform: uppercase;
-            margin-bottom: 12px;
-            letter-spacing: 1px;
+            transition: 0.3s;
+            margin-bottom: 10px;
         }
 
-        .btn-blue {
-            background: linear-gradient(45deg, #00d4ff, #0055ff);
-            color: #000;
-            box-shadow: 0 0 20px rgba(0, 212, 255, 0.5);
+        .btn-red {
+            background: var(--neon-red);
+            color: white;
+            box-shadow: 0 0 10px var(--neon-red);
         }
 
-        .btn-blue:hover {
-            box-shadow: 0 0 30px rgba(0, 212, 255, 0.8);
-            transform: translateY(-2px);
+        .btn-red:hover {
+            background: #b30000;
+            box-shadow: 0 0 20px var(--neon-red);
         }
 
         .btn-pro {
-            background: linear-gradient(45deg, #ffcc00, #ff6600);
+            background: #fff;
             color: #000;
-            box-shadow: 0 0 25px rgba(255, 204, 0, 0.5);
+            box-shadow: 0 0 15px #fff;
         }
 
-        .btn-pro:hover {
-            box-shadow: 0 0 35px rgba(255, 204, 0, 0.8);
-            transform: translateY(-2px);
-        }
-
-        .points-display {
-            background: rgba(0, 212, 255, 0.05);
-            padding: 20px;
-            border-radius: 20px;
-            margin: 20px 0;
-            border: 1px dashed rgba(0, 212, 255, 0.3);
+        .points-box {
+            border: 1px dashed var(--neon-red);
+            padding: 15px;
+            margin: 15px 0;
         }
 
         .points-val {
-            font-size: 50px;
-            color: var(--neon-glowing);
-            font-weight: bold;
-            text-shadow: 0 0 25px rgba(0, 255, 136, 0.7);
+            font-size: 40px;
+            color: #fff;
+            text-shadow: 0 0 15px var(--neon-red);
         }
 
-        .status-badge {
-            display: inline-block;
-            padding: 6px 18px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: bold;
-            margin-bottom: 15px;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255,255,255,0.1);
-            color: #aaa;
-        }
-
-        #status-msg { font-size: 13px; color: #888; margin-top: 15px; }
-
+        .status { font-size: 11px; color: var(--neon-red); margin-top: 10px; }
     </style>
 </head>
 <body>
 
-    <video autoplay loop muted playsinline id="bg-video">
-        <source src="https://assets.mixkit.co/videos/preview/mixkit-abstract-technology-vj-loop-background-40018-large.mp4" type="video/mp4">
-    </video>
+    <canvas id="matrix"></canvas>
 
     <div id="auth-section" class="box">
-        <div class="status-badge">SECURE ACCESS v5.0</div>
-        <h1>FR4ST</h1>
-        <p style="color: var(--neon); font-size: 13px; letter-spacing: 3px; margin-bottom: 30px;">DATABASE PORTAL</p>
-        <input type="text" id="user-id" placeholder="Enter Player ID">
-        <button class="btn btn-blue" onclick="login()">ENTER SYSTEM</button>
-        <p id="status-msg">Initializing Quantum Encryption...</p>
+        <h1>SIBOK</h1>
+        <p class="sub-title">SYSTEM ENCRYPTION: ACTIVE</p>
+        <input type="text" id="user-id" placeholder="[ ENTER PLAYER ID ]">
+        <button class="btn btn-red" onclick="login()">DEPLOY TERMINAL</button>
+        <div class="status">SERVER: ONLINE | v2026.V1.1</div>
     </div>
 
     <div id="dashboard" class="box" style="display:none;">
-        <div class="status-badge" id="pro-tag">BASIC USER</div>
-        <p style="font-size: 14px; opacity: 0.7;">CONNECTED ID: <span id="display-id" style="color: var(--neon);">---</span></p>
+        <h2 id="pro-tag" style="font-size: 14px; color: var(--neon-red);">[ BASIC ACCESS ]</h2>
+        <p style="color: #fff; font-size: 12px;">ID: <span id="display-id"></span></p>
         
-        <div class="points-display">
-            <div style="font-size: 12px; color: var(--neon); letter-spacing: 2px;">WALLET BALANCE</div>
-            <div class="points-val"><span id="user-points">0</span> <span style="font-size: 18px;">PTS</span></div>
+        <div class="points-box">
+            <div style="font-size: 10px; color: var(--neon-red);">DATABASE POINTS</div>
+            <div class="points-val"><span id="user-points">0</span></div>
         </div>
         
-        <button class="btn btn-pro" onclick="upgradeToPro()" id="upgrade-btn">🚀 ACTIVATE PRO MODE</button>
-        <button class="btn btn-blue" onclick="watchAd(1)">VIEW EASY TASK (Rs. 1)</button>
-        <button class="btn" id="pro-ad-btn" style="background:#222; color:#555; cursor:not-allowed; border: 1px solid #333;" disabled onclick="watchAd(20)">PRO TASK (LOCKED 🔒)</button>
+        <button class="btn btn-pro" onclick="upgradeToPro()" id="upgrade-btn">ACTIVATE PRO KEY</button>
+        <button class="btn btn-red" onclick="watchAd(1)">EXECUTE EASY TASK</button>
+        <button class="btn" id="pro-ad-btn" style="background:#222; color:#444; cursor:not-allowed;" disabled onclick="watchAd(20)">PRO TASK (LOCKED)</button>
     </div>
 
     <script>
-        // Firebase Configuration
+        // --- MATRIX ANIMATION ---
+        const canvas = document.getElementById('matrix');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789$#@%";
+        const fontSize = 16;
+        const columns = canvas.width / fontSize;
+        const drops = Array(Math.floor(columns)).fill(1);
+
+        function drawMatrix() {
+            ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = "#ff0000"; // රතු පාට අකුරු
+            ctx.font = fontSize + "px monospace";
+            for (let i = 0; i < drops.length; i++) {
+                const text = letters[Math.floor(Math.random() * letters.length)];
+                ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+                if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0;
+                drops[i]++;
+            }
+        }
+        setInterval(drawMatrix, 50);
+
+        // --- FIREBASE LOGIC ---
         const firebaseConfig = {
             apiKey: "AIzaSyDj-Q98LskW2kqpAkx66EP-TeYvC7_8U4",
             authDomain: "fr4st-ff-store.firebaseapp.com",
@@ -205,25 +190,17 @@
         const db = firebase.database();
         let currentUserID = "";
 
-        // Login Logic with error logging
         function login() {
             const id = document.getElementById('user-id').value.trim();
-            if(!id) return alert("Enter Player ID!");
+            if(!id) return alert("ID ගහපන් බං!");
             currentUserID = id;
-            
-            document.getElementById('status-msg').innerText = "CONNECTING TO DATABASE...";
-
             db.ref('users/' + id).once('value', (snapshot) => {
                 if(!snapshot.exists()) {
-                    db.ref('users/' + id).set({ points: 0, isPro: false })
-                    .then(() => loadDashboard({ points: 0, isPro: false }))
-                    .catch(e => { alert("Database Error: " + e.message); console.error(e); });
+                    db.ref('users/' + id).set({ points: 0, isPro: false });
+                    loadDashboard({ points: 0, isPro: false });
                 } else {
                     loadDashboard(snapshot.val());
                 }
-            }, (error) => {
-                alert("Firebase Rules Error: " + error.message + "\n\nMake sure to set .read and .write to true in Firebase Rules!");
-                console.error(error);
             });
         }
 
@@ -236,33 +213,27 @@
         }
 
         function setProUI() {
-            document.getElementById('pro-tag').innerText = "PRO ACCOUNT ACTIVE 🔥";
-            document.getElementById('pro-tag').style.color = var(--pro-color);
+            document.getElementById('pro-tag').innerText = "[ PRO ACCESS GRANTED ]";
             document.getElementById('pro-ad-btn').disabled = false;
-            document.getElementById('pro-ad-btn').className = "btn btn-pro";
+            document.getElementById('pro-ad-btn').className = "btn btn-red";
             document.getElementById('pro-ad-btn').style.cursor = "pointer";
-            document.getElementById('pro-ad-btn').innerText = "VIEW PRO TASK (Rs. 20)";
+            document.getElementById('pro-ad-btn').innerText = "EXECUTE PRO TASK";
             document.getElementById('upgrade-btn').style.display = "none";
         }
 
         function watchAd(amount) {
-            alert("Redirecting to Ad Task...");
-            window.open('https://www.google.com', '_blank'); // REPLACE WITH YOUR AD LINK
-            
-            // Transaction ensuring atomic point update
-            db.ref('users/' + currentUserID + '/points').transaction(cp => (cp || 0) + amount);
+            alert("REDIRECTING TO RED TERMINAL...");
+            window.open('https://www.google.com', '_blank'); 
+            db.ref('users/' + currentUserID + '/points').transaction(p => (p || 0) + amount);
             let p = parseInt(document.getElementById('user-points').innerText);
             document.getElementById('user-points').innerText = p + amount;
         }
 
         function upgradeToPro() {
-            let n = prompt("Activation Number එක ගහන්න:");
-            if(n && n.length >= 10) {
+            let n = prompt("ENTER PRO ACCESS KEY:");
+            if(n) {
                 db.ref('users/' + currentUserID).update({ isPro: true });
                 setProUI();
-                alert("PRO MODE ACTIVATED! Enjoy Higher Earning.");
-            } else if (n) {
-                alert("Invalid Activation Number!");
             }
         }
     </script>
