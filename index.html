@@ -3,43 +3,174 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FR4ST FREE DIAMOND</title>
+    <title>FR4ST FREE DIAMOND | 3D PRO</title>
     <script src="https://www.gstatic.com/firebasejs/9.1.3/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.1.3/firebase-database-compat.js"></script>
     <style>
-        :root { --neon: #00d4ff; --bg: #0b0b1a; }
-        body { background: var(--bg); color: white; font-family: sans-serif; text-align: center; }
-        .box { border: 2px solid var(--neon); padding: 20px; border-radius: 15px; margin: 20px auto; width: 85%; max-width: 400px; background: #15152a; }
-        .btn { background: var(--neon); color: black; padding: 12px; width: 100%; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; margin-top: 10px; }
-        .points { font-size: 30px; color: #00ff88; font-weight: bold; margin: 10px 0; }
-        input { width: 90%; padding: 10px; margin: 5px 0; border-radius: 5px; border: none; }
-        .pro-badge { background: linear-gradient(45deg, #ffcc00, #ff6600); color: black; padding: 10px; border-radius: 8px; margin-bottom: 15px; font-weight: bold; }
+        :root {
+            --neon: #00d4ff;
+            --purple: #8a2be2;
+            --bg: #050510;
+        }
+        
+        body {
+            background: linear-gradient(-45deg, #050510, #1a1a2e, #0f0f1a, #000000);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            color: white;
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .box {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 25px;
+            width: 90%;
+            max-width: 400px;
+            text-align: center;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+            animation: float 4s ease-in-out infinite;
+            border-top: 2px solid var(--neon);
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotateX(0deg); }
+            50% { transform: translateY(-15px) rotateX(5deg); }
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            text-transform: uppercase;
+            letter-spacing: 5px;
+            background: linear-gradient(to right, #00d4ff, #8a2be2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 0 10px rgba(0, 212, 255, 0.5));
+            margin-bottom: 20px;
+        }
+
+        .points-box {
+            background: rgba(0, 212, 255, 0.1);
+            border-radius: 15px;
+            padding: 15px;
+            margin: 15px 0;
+            border: 1px dashed var(--neon);
+        }
+
+        .points {
+            font-size: 45px;
+            color: #00ff88;
+            font-weight: 900;
+            text-shadow: 0 0 20px rgba(0, 255, 136, 0.6);
+        }
+
+        input {
+            width: 85%;
+            padding: 15px;
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid var(--neon);
+            border-radius: 10px;
+            color: white;
+            margin-bottom: 15px;
+            outline: none;
+            transition: 0.3s;
+        }
+
+        input:focus { box-shadow: 0 0 15px var(--neon); }
+
+        .btn {
+            width: 100%;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 12px;
+            border: none;
+            font-weight: bold;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: 0.3s;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .btn-blue {
+            background: linear-gradient(45deg, #00d4ff, #0055ff);
+            color: white;
+        }
+
+        .btn-pro {
+            background: linear-gradient(45deg, #ffcc00, #ff6600);
+            color: black;
+            box-shadow: 0 0 20px rgba(255, 153, 0, 0.4);
+        }
+
+        .btn:active { transform: scale(0.95); }
+
+        .pro-locked {
+            background: #333 !important;
+            color: #888 !important;
+            cursor: not-allowed !important;
+            opacity: 0.6;
+        }
+
+        /* 3D look for status badge */
+        .status-badge {
+            display: inline-block;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
     </style>
 </head>
 <body>
 
-    <h1>FR4ST DIAMOND</h1>
+    <h1>FR4ST</h1>
 
     <div id="auth-section" class="box">
-        <h3>Account Login</h3>
-        <input type="text" id="user-id" placeholder="Enter Your Player ID">
-        <button class="btn" onclick="login()">Login / Join</button>
+        <div class="status-badge">SECURE SERVER v3.0</div>
+        <h3>SYSTEM INITIALIZING...</h3>
+        <p>Enter Player ID to Access Database</p>
+        <input type="text" id="user-id" placeholder="ID: 882736452">
+        <button class="btn btn-blue" onclick="login()">ENTER SYSTEM</button>
     </div>
 
     <div id="dashboard" class="box" style="display:none;">
-        <div class="pro-badge" id="pro-tag">BASIC MEMBER</div>
-        <h3>ID: <span id="display-id">---</span></h3>
-        <div class="points">Points: <span id="user-points">0</span></div>
+        <div class="status-badge" id="pro-tag">BASIC USER</div>
+        <p style="font-size: 14px; opacity: 0.7;">CONNECTED: <span id="display-id">---</span></p>
         
-        <button class="btn" onclick="upgradeToPro()" id="upgrade-btn">Upgrade to PRO (Unlock Rs. 20 Ads)</button>
-        <button class="btn" onclick="watchAd(1)">Watch Easy Ad (Rs. 1)</button>
-        <button class="btn" id="pro-ad-btn" style="background:#444; cursor:not-allowed;" disabled onclick="watchAd(20)">Watch Pro Ad (Locked)</button>
+        <div class="points-box">
+            <div style="font-size: 12px; color: var(--neon);">WALLET BALANCE</div>
+            <div class="points"><span id="user-points">0</span> <span style="font-size: 15px;">PTS</span></div>
+        </div>
+        
+        <button class="btn btn-pro" onclick="upgradeToPro()" id="upgrade-btn">🚀 ACTIVATE PRO MODE</button>
+        <button class="btn btn-blue" onclick="watchAd(1)">VIEW EASY TASK (Rs. 1)</button>
+        <button class="btn pro-locked" id="pro-ad-btn" disabled onclick="watchAd(20)">PRO TASK (LOCKED 🔒)</button>
     </div>
 
     <script>
-        // Firebase Config (ඔයාගේ Screenshot එකෙන් ගත්තේ)
         const firebaseConfig = {
-            apiKey: "AIzaSyDj-Q98LskW2kqpAkx66EP-T...", // මෙතන ඔයාගේ සම්පූර්ණ API Key එක දාන්න
+            apiKey: "AIzaSyDj-Q98LskW2kqpAkx66EP-TeYvC7_8U4",
             authDomain: "fr4st-ff-store.firebaseapp.com",
             databaseURL: "https://fr4st-ff-store-default-rtdb.firebaseio.com",
             projectId: "fr4st-ff-store",
@@ -54,17 +185,17 @@
         let currentUserID = "";
 
         function login() {
-            const id = document.getElementById('user-id').value;
-            if(!id) return alert("ID එක ගහපන් බං!");
+            const id = document.getElementById('user-id').value.trim();
+            if(!id) return alert("Enter Player ID!");
             currentUserID = id;
             
-            // Database එකෙන් User ව හොයනවා
             db.ref('users/' + id).once('value', (snapshot) => {
                 if(!snapshot.exists()) {
-                    // අලුත් User කෙනෙක් නම්
                     db.ref('users/' + id).set({ points: 0, isPro: false });
+                    loadDashboard({ points: 0, isPro: false });
+                } else {
+                    loadDashboard(snapshot.val());
                 }
-                loadDashboard(snapshot.val() || { points: 0, isPro: false });
             });
         }
 
@@ -73,43 +204,32 @@
             document.getElementById('dashboard').style.display = 'block';
             document.getElementById('display-id').innerText = currentUserID;
             document.getElementById('user-points').innerText = data.points;
-            
-            if(data.isPro) {
-                setProUI();
-            }
+            if(data.isPro) setProUI();
         }
 
         function setProUI() {
-            document.getElementById('pro-tag').innerText = "PRO MEMBER 🔥";
-            document.getElementById('pro-tag').style.background = "linear-gradient(45deg, #00d4ff, #0055ff)";
+            document.getElementById('pro-tag').innerText = "PRO ACCOUNT ACTIVE 🔥";
+            document.getElementById('pro-tag').style.color = "#ffcc00";
             document.getElementById('pro-ad-btn').disabled = false;
-            document.getElementById('pro-ad-btn').style.background = "#00d4ff";
-            document.getElementById('pro-ad-btn').style.cursor = "pointer";
-            document.getElementById('pro-ad-btn').innerText = "Watch Pro Ad (Rs. 20)";
+            document.getElementById('pro-ad-btn').className = "btn btn-pro";
+            document.getElementById('pro-ad-btn').innerText = "VIEW PRO TASK (Rs. 20)";
             document.getElementById('upgrade-btn').style.display = "none";
         }
 
         function watchAd(amount) {
-            alert("Loading Ad...");
-            // මෙතනට ඔයාගේ Adsterra Link එක දාන්න
+            alert("Redirecting to task...");
             window.open('https://www.google.com', '_blank'); 
-
-            // Points Update කිරීම
-            db.ref('users/' + currentUserID + '/points').transaction((currentPoints) => {
-                return (currentPoints || 0) + amount;
-            });
-            
-            // UI එක Update කිරීම
+            db.ref('users/' + currentUserID + '/points').transaction(cp => (cp || 0) + amount);
             let p = parseInt(document.getElementById('user-points').innerText);
             document.getElementById('user-points').innerText = p + amount;
         }
 
         function upgradeToPro() {
-            let num = prompt("Enter Number for Daily Tax (Rs. 5/day):");
-            if(num) {
+            let num = prompt("Enter Number for Activation (Rs. 5 Daily Tax):");
+            if(num && num.length >= 10) {
                 db.ref('users/' + currentUserID).update({ isPro: true });
                 setProUI();
-                alert("Pro Unlocked!");
+                alert("PRO MODE ACTIVATED SUCCESSFULLY!");
             }
         }
     </script>
