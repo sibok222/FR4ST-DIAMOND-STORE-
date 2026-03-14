@@ -3,13 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FR4ST FREE DIAMOND | 3D PRO</title>
+    <title>FR4ST FREE DIAMOND | 3D DARK PRO</title>
     <script src="https://www.gstatic.com/firebasejs/9.1.3/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.1.3/firebase-database-compat.js"></script>
     <style>
         :root {
-            --neon: #00d4ff;
-            --pro-color: #ffcc00;
+            --neon: #00d4ff; /* Neon Blue */
+            --neon-glowing: #00ff88; /* Neon Green for points */
+            --pro-color: #ffcc00; /* Gold for PRO */
+            --dark-bg: #050510;
         }
 
         body, html {
@@ -17,14 +19,15 @@
             padding: 0;
             width: 100%;
             height: 100%;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            overflow: hidden;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            overflow: hidden; /* Prevent scrolling for video bg */
             display: flex;
             align-items: center;
             justify-content: center;
+            background-color: var(--dark-bg);
         }
 
-        /* 3D Video Background */
+        /* Animated Video Background - 3D Tech Abstract Loop */
         #bg-video {
             position: fixed;
             top: 0;
@@ -33,93 +36,127 @@
             height: 100%;
             object-fit: cover;
             z-index: -1;
-            filter: brightness(40%);
+            filter: brightness(30%); /* Darken video for text contrast */
         }
 
-        /* Glassmorphism 3D Box */
+        /* Ultra Dark Glassmorphism 3D Box */
         .box {
-            background: rgba(255, 255, 255, 0.07);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 30px;
-            padding: 35px;
+            background: rgba(0, 0, 0, 0.6); /* Super Dark Background */
+            backdrop-filter: blur(25px); /* Stronger Blur */
+            -webkit-backdrop-filter: blur(25px);
+            border: 1px solid rgba(255, 255, 255, 0.05); /* Very Subtle Border */
+            border-radius: 35px;
+            padding: 40px;
             width: 85%;
-            max-width: 380px;
+            max-width: 400px;
             text-align: center;
-            box-shadow: 0 25px 45px rgba(0, 0, 0, 0.5);
-            transform: perspective(1000px) rotateX(5deg);
-            animation: float 5s ease-in-out infinite;
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8);
+            transform: perspective(1000px) rotateX(3deg);
+            animation: float 6s ease-in-out infinite;
+            border-top: 2px solid var(--neon); /* Neon Accent Top */
         }
 
         @keyframes float {
-            0%, 100% { transform: perspective(1000px) translateY(0px) rotateX(5deg); }
-            50% { transform: perspective(1000px) translateY(-15px) rotateX(2deg); }
+            0%, 100% { transform: perspective(1000px) translateY(0px) rotateX(3deg); }
+            50% { transform: perspective(1000px) translateY(-20px) rotateX(1deg); }
         }
 
         h1 {
-            font-size: 2.8rem;
-            margin: 0 0 20px 0;
-            background: linear-gradient(to bottom, #fff, var(--neon));
+            font-size: 3.2rem;
+            margin: 0 0 10px 0;
+            background: linear-gradient(to bottom, #fff 40%, var(--neon));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            letter-spacing: 3px;
+            letter-spacing: 4px;
             font-weight: 900;
+            filter: drop-shadow(0 0 15px rgba(0, 212, 255, 0.6));
         }
 
+        /* Dark & Glowing Input Boxes */
         input {
-            width: 85%;
-            padding: 15px;
-            margin-bottom: 20px;
-            background: rgba(0, 0, 0, 0.4);
-            border: 1px solid var(--neon);
-            border-radius: 12px;
+            width: 90%;
+            padding: 18px;
+            margin-bottom: 25px;
+            background: rgba(0, 0, 0, 0.8); /* Pure Dark Input */
+            border: 1px solid rgba(0, 212, 255, 0.3); /* Subtle Neon Border */
+            border-radius: 15px;
             color: #fff;
-            font-size: 16px;
+            font-size: 17px;
             outline: none;
-            box-shadow: inset 0 0 10px rgba(0, 212, 255, 0.2);
+            transition: 0.3s ease;
+            box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.5);
+        }
+
+        input:focus {
+            border-color: var(--neon);
+            box-shadow: 0 0 20px rgba(0, 212, 255, 0.5), inset 0 0 10px rgba(0, 0, 0, 0.5);
         }
 
         .btn {
             width: 100%;
-            padding: 16px;
+            padding: 18px;
             border: none;
-            border-radius: 12px;
+            border-radius: 15px;
             font-weight: bold;
-            font-size: 15px;
+            font-size: 16px;
             cursor: pointer;
-            transition: 0.3s;
+            transition: 0.3s ease;
             text-transform: uppercase;
-            margin-bottom: 10px;
+            margin-bottom: 12px;
+            letter-spacing: 1px;
         }
 
         .btn-blue {
-            background: var(--neon);
+            background: linear-gradient(45deg, #00d4ff, #0055ff);
             color: #000;
-            box-shadow: 0 0 15px rgba(0, 212, 255, 0.4);
+            box-shadow: 0 0 20px rgba(0, 212, 255, 0.5);
+        }
+
+        .btn-blue:hover {
+            box-shadow: 0 0 30px rgba(0, 212, 255, 0.8);
+            transform: translateY(-2px);
         }
 
         .btn-pro {
             background: linear-gradient(45deg, #ffcc00, #ff6600);
             color: #000;
-            box-shadow: 0 0 20px rgba(255, 204, 0, 0.4);
+            box-shadow: 0 0 25px rgba(255, 204, 0, 0.5);
+        }
+
+        .btn-pro:hover {
+            box-shadow: 0 0 35px rgba(255, 204, 0, 0.8);
+            transform: translateY(-2px);
         }
 
         .points-display {
-            background: rgba(0, 212, 255, 0.1);
-            padding: 15px;
-            border-radius: 15px;
-            margin: 15px 0;
-            border-left: 4px solid var(--neon);
+            background: rgba(0, 212, 255, 0.05);
+            padding: 20px;
+            border-radius: 20px;
+            margin: 20px 0;
+            border: 1px dashed rgba(0, 212, 255, 0.3);
         }
 
         .points-val {
-            font-size: 40px;
-            color: #00ff88;
+            font-size: 50px;
+            color: var(--neon-glowing);
             font-weight: bold;
+            text-shadow: 0 0 25px rgba(0, 255, 136, 0.7);
         }
 
-        #status-msg { font-size: 12px; color: #aaa; margin-top: 10px; }
+        .status-badge {
+            display: inline-block;
+            padding: 6px 18px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            color: #aaa;
+        }
+
+        #status-msg { font-size: 13px; color: #888; margin-top: 15px; }
+
     </style>
 </head>
 <body>
@@ -129,25 +166,26 @@
     </video>
 
     <div id="auth-section" class="box">
+        <div class="status-badge">SECURE ACCESS v5.0</div>
         <h1>FR4ST</h1>
-        <p style="color: var(--neon); font-size: 12px; letter-spacing: 2px;">SECURE ACCESS PANEL</p>
+        <p style="color: var(--neon); font-size: 13px; letter-spacing: 3px; margin-bottom: 30px;">DATABASE PORTAL</p>
         <input type="text" id="user-id" placeholder="Enter Player ID">
-        <button class="btn btn-blue" onclick="login()">Enter Database</button>
-        <p id="status-msg">v4.0 Technology System</p>
+        <button class="btn btn-blue" onclick="login()">ENTER SYSTEM</button>
+        <p id="status-msg">Initializing Quantum Encryption...</p>
     </div>
 
     <div id="dashboard" class="box" style="display:none;">
-        <h2 id="pro-tag" style="font-size: 14px; color: #aaa;">BASIC MEMBER</h2>
-        <p style="font-size: 13px; opacity: 0.6;">SESSION ID: <span id="display-id"></span></p>
+        <div class="status-badge" id="pro-tag">BASIC USER</div>
+        <p style="font-size: 14px; opacity: 0.7;">CONNECTED ID: <span id="display-id" style="color: var(--neon);">---</span></p>
         
         <div class="points-display">
-            <div style="font-size: 11px; color: var(--neon);">CURRENT POINTS</div>
-            <div class="points-val"><span id="user-points">0</span></div>
+            <div style="font-size: 12px; color: var(--neon); letter-spacing: 2px;">WALLET BALANCE</div>
+            <div class="points-val"><span id="user-points">0</span> <span style="font-size: 18px;">PTS</span></div>
         </div>
         
-        <button class="btn btn-pro" onclick="upgradeToPro()" id="upgrade-btn">🚀 UNLOCK PRO MODE</button>
-        <button class="btn btn-blue" onclick="watchAd(1)">Easy Task (Rs. 1)</button>
-        <button class="btn" id="pro-ad-btn" style="background:#444; color:#888; cursor:not-allowed;" disabled onclick="watchAd(20)">Pro Task (Locked)</button>
+        <button class="btn btn-pro" onclick="upgradeToPro()" id="upgrade-btn">🚀 ACTIVATE PRO MODE</button>
+        <button class="btn btn-blue" onclick="watchAd(1)">VIEW EASY TASK (Rs. 1)</button>
+        <button class="btn" id="pro-ad-btn" style="background:#222; color:#555; cursor:not-allowed; border: 1px solid #333;" disabled onclick="watchAd(20)">PRO TASK (LOCKED 🔒)</button>
     </div>
 
     <script>
@@ -167,10 +205,10 @@
         const db = firebase.database();
         let currentUserID = "";
 
-        // Login Logic
+        // Login Logic with error logging
         function login() {
             const id = document.getElementById('user-id').value.trim();
-            if(!id) return alert("Player ID එක ගහපන්!");
+            if(!id) return alert("Enter Player ID!");
             currentUserID = id;
             
             document.getElementById('status-msg').innerText = "CONNECTING TO DATABASE...";
@@ -179,12 +217,13 @@
                 if(!snapshot.exists()) {
                     db.ref('users/' + id).set({ points: 0, isPro: false })
                     .then(() => loadDashboard({ points: 0, isPro: false }))
-                    .catch(e => alert("Error: " + e.message));
+                    .catch(e => { alert("Database Error: " + e.message); console.error(e); });
                 } else {
                     loadDashboard(snapshot.val());
                 }
             }, (error) => {
-                alert("Firebase Rules Error: " + error.message);
+                alert("Firebase Rules Error: " + error.message + "\n\nMake sure to set .read and .write to true in Firebase Rules!");
+                console.error(error);
             });
         }
 
@@ -197,30 +236,33 @@
         }
 
         function setProUI() {
-            document.getElementById('pro-tag').innerText = "PRO MEMBER ACTIVE 🔥";
-            document.getElementById('pro-tag').style.color = "#ffcc00";
+            document.getElementById('pro-tag').innerText = "PRO ACCOUNT ACTIVE 🔥";
+            document.getElementById('pro-tag').style.color = var(--pro-color);
             document.getElementById('pro-ad-btn').disabled = false;
-            document.getElementById('pro-ad-btn').style.background = "var(--neon)";
-            document.getElementById('pro-ad-btn').style.color = "#000";
+            document.getElementById('pro-ad-btn').className = "btn btn-pro";
             document.getElementById('pro-ad-btn').style.cursor = "pointer";
-            document.getElementById('pro-ad-btn').innerText = "Pro Task (Rs. 20)";
+            document.getElementById('pro-ad-btn').innerText = "VIEW PRO TASK (Rs. 20)";
             document.getElementById('upgrade-btn').style.display = "none";
         }
 
         function watchAd(amount) {
-            alert("Loading Ad Task...");
-            window.open('https://www.google.com', '_blank'); // මෙතනට ඔයාගේ ලින්ක් එක දාන්න
+            alert("Redirecting to Ad Task...");
+            window.open('https://www.google.com', '_blank'); // REPLACE WITH YOUR AD LINK
             
-            db.ref('users/' + currentUserID + '/points').transaction(p => (p || 0) + amount);
+            // Transaction ensuring atomic point update
+            db.ref('users/' + currentUserID + '/points').transaction(cp => (cp || 0) + amount);
             let p = parseInt(document.getElementById('user-points').innerText);
             document.getElementById('user-points').innerText = p + amount;
         }
 
         function upgradeToPro() {
             let n = prompt("Activation Number එක ගහන්න:");
-            if(n) {
+            if(n && n.length >= 10) {
                 db.ref('users/' + currentUserID).update({ isPro: true });
                 setProUI();
+                alert("PRO MODE ACTIVATED! Enjoy Higher Earning.");
+            } else if (n) {
+                alert("Invalid Activation Number!");
             }
         }
     </script>
